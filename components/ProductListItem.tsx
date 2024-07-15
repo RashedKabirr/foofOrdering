@@ -1,11 +1,14 @@
-import { StyleSheet, Image } from 'react-native';
-
+import { StyleSheet, Image, Pressable } from 'react-native';
+import React from 'react';
+import { Link } from 'expo-router';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
 import { Product } from '@/app/types';
-import products from '@/assets/data/products';
-const product = products;
+
+
+
+
 
 type ProductListItemsProps = {
     product : Product
@@ -15,21 +18,26 @@ const defaultPizzaImage = 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/f
 
 const ProductListItem = ({product} : ProductListItemsProps)  => {
  return(
-  <View style={styles.container}> 
+  <Link href={`./menu/${product.id}`} asChild>
+  <Pressable  style={styles.container}> 
   <Image source={{ uri: product.image || defaultPizzaImage }} style={styles.image} />
   <Text style={styles.title}>{product.name}</Text>
   <Text style={styles.price}>{product.price}</Text>   
-   </View>
- )
-}
+   </Pressable>
+   </Link>
+ );
+};
 
 export default ProductListItem;
 
 const styles = StyleSheet.create({
   container: {
     backgroundColor: '#e0d1c1',
-    padding: 10,
-    borderRadius: 30
+    padding: 20,
+    borderRadius: 20,
+    paddingBottom: 10,
+    flex : 1,
+    margin: 6
 
    
   },
@@ -45,6 +53,8 @@ const styles = StyleSheet.create({
   },
   image : {
     width: '100%',
-    aspectRatio: 1
+    aspectRatio: 1,
+    
+    
   }
 });
