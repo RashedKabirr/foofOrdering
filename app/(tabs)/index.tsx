@@ -14,7 +14,7 @@ export default function TabOneScreen() {
   return (
     <View>  
     <ProductListItem product={products[0]}/>
-    <ProductListItem product={products[2]}/>
+    <ProductListItem product={products[4]}/>
   
     </View>
   );
