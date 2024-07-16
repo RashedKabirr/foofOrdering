@@ -1,4 +1,4 @@
-import { StyleSheet, Image, FlatList } from 'react-native';
+import { StyleSheet, Image, FlatList, Pressable } from 'react-native';
 import EditScreenInfo from '@/components/EditScreenInfo';
 import { Text, View } from '@/components/Themed';
 import Colors from '@/constants/Colors';
@@ -6,6 +6,7 @@ import ProductListItem from '@/components/ProductListItem';
 import products from '@/assets/data/products';
 import { Stack, useLocalSearchParams } from 'expo-router';
 import { useState } from 'react';
+import Button from '@/components/Button';
 
 
 
@@ -15,6 +16,9 @@ const ProductDetailScreen = () =>{
    const [selectedSize, setSelectedSite] = useState("M");
    const {id} = useLocalSearchParams();
    const product = products.find((p) => p.id.toString() === id);
+   const addTocard = ()=> {
+      console.warn('added to card size: ' , selectedSize);
+   };
 
    return(
     <View style = {styles.container}>
@@ -23,21 +27,28 @@ const ProductDetailScreen = () =>{
 
 
       <Text style = {styles.selectSizeText}>Select Size</Text>
+
       <View style = {styles.sizes}>
        {sizes.map((size) => (
-          <View style = {[styles.size, 
+          <Pressable onPress={() => (setSelectedSite(size))} style = {[styles.size, 
             {
                backgroundColor: selectedSize === size ? 'gainsboro': 'white',
             },
           ]} 
           key={size}>
-         <Text style = {styles.sizeText}>{size}</Text>
-         </View>
+
+         <Text style = {[styles.sizeText, 
+            {
+               color : selectedSize === size ? 'black' : 'gray'
+            }
+         ]}>{size}</Text>
+         </Pressable>
          ))}
       </View>
 
 
        <Text style={styles.price}>${product?.price}</Text>
+       <Button onPress={addTocard} text='add to card' />
     </View>
    );
 };
@@ -59,7 +70,8 @@ const styles = StyleSheet.create({
    },
    price: {
       fontSize: 23,
-      color: Colors.light.tint    
+      color: Colors.light.tint,
+      marginTop: 'auto'    
    },
    selectSizeText : {
       color : Colors.light.text,
